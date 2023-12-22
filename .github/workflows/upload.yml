@@ -13,8 +13,6 @@ jobs:
               with:
                   node-version: '21.x'
             - run: yarn install --immutable
-            - run: yarn setversion
-            - run: yarn compile
             - uses: JS-DevTools/npm-publish@v3.0.1
               with:
                   token: ${{ secrets.PAT }}
