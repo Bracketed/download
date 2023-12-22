@@ -1,5 +1,5 @@
 {
-	"name": "@bracketed/download",
+	"name": "@bracketed/downloader",
 	"version": "1.0.0",
 	"description": "Download and extract files using node.js!",
 	"license": "MIT",
