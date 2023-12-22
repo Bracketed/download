@@ -4,7 +4,7 @@ const path = require('path');
 const { URL } = require('url');
 const contentDisposition = require('content-disposition');
 const archiveType = require('archive-type');
-const decompress = require('decompress');
+const decompress = require('@bracketed/decompress');
 const filenamify = require('filenamify');
 const getStream = require('get-stream');
 const got = require('got');
@@ -15,10 +15,10 @@ const fileType = require('file-type');
 const extName = require('ext-name');
 
 const fsP = pify(fs);
-const filenameFromPath = (res) => path.basename(new URL(res.requestUrl).pathname);
+const filenameFromPath = async (res) => path.basename(new URL(await res.requestUrl).pathname);
 
-const getExtFromMime = (res) => {
-	const header = res.headers['content-type'];
+const getExtFromMime = async (res) => {
+	const header = await res.headers['content-type'];
 
 	if (!header) {
 		return null;
@@ -33,8 +33,8 @@ const getExtFromMime = (res) => {
 	return exts[0].ext;
 };
 
-const getFilename = (res, data) => {
-	const header = res.headers['content-disposition'];
+const getFilename = async (res, data) => {
+	const header = await res.headers['content-disposition'];
 
 	if (header) {
 		const parsed = contentDisposition.parse(header);
@@ -44,26 +44,26 @@ const getFilename = (res, data) => {
 		}
 	}
 
-	let filename = filenameFromPath(res);
+	let filename = await filenameFromPath(res);
 
 	if (!path.extname(filename)) {
-		const ext = (fileType(data) || {}).ext || getExtFromMime(res);
+		const ext = ((await fileType(data)) || {}).ext || (await getExtFromMime(res));
 
 		if (ext) {
-			filename = `${filename}.${ext}`;
+			filename = `${filename}.${await ext}`;
 		}
 	}
 
 	return filename;
 };
 
-module.exports = (uri, output, opts) => {
-	if (typeof output === 'object') {
-		opts = output;
+module.exports = async (uri, output, opts) => {
+	if (typeof (await output) === 'object') {
+		opts = await output;
 		output = null;
 	}
 
-	opts = Object.assign(
+	opts = await Object.assign(
 		{
 			encoding: null,
 			rejectUnauthorized: process.env.npm_config_strict_ssl !== 'false',
@@ -73,32 +73,34 @@ module.exports = (uri, output, opts) => {
 
 	const stream = got.stream(uri, opts);
 
-	const promise = pEvent(stream, 'response')
-		.then((res) => {
-			const encoding = opts.encoding === null ? 'buffer' : opts.encoding;
-			return Promise.all([getStream(stream, { encoding }), res]);
+	const promise = await pEvent(stream, 'response')
+		.then(async (res) => {
+			const encoding = (await opts.encoding) === null ? 'buffer' : await opts.encoding;
+			return await Promise.all([await getStream(stream, { encoding }), res]);
 		})
-		.then((result) => {
-			const [data, res] = result;
+		.then(async (result) => {
+			const [data, res] = await result;
 
 			if (!output) {
-				return opts.extract && archiveType(data) ? decompress(data, opts) : data;
+				return (await opts.extract) && (await archiveType(await data))
+					? await decompress(await data, await opts)
+					: await data;
 			}
 
-			const filename = opts.filename || filenamify(getFilename(res, data));
+			const filename = (await opts.filename) || (await filenamify(await getFilename(res, data)));
 			const outputFilepath = path.join(output, filename);
 
-			if (opts.extract && archiveType(data)) {
-				return decompress(data, path.dirname(outputFilepath), opts);
+			if (opts.extract && (await archiveType(data))) {
+				return await decompress(data, path.dirname(outputFilepath), opts);
 			}
 
-			return makeDir(path.dirname(outputFilepath))
-				.then(() => fsP.writeFile(outputFilepath, data))
-				.then(() => data);
+			return await makeDir(path.dirname(outputFilepath))
+				.then(async () => await fsP.writeFile(outputFilepath, await data))
+				.then(async () => await data);
 		});
 
-	stream.then = promise.then.bind(promise);
-	stream.catch = promise.catch.bind(promise);
+	stream.then = await promise.then.bind(await promise);
+	stream.catch = await promise.catch.bind(await promise);
 
 	return stream;
 };

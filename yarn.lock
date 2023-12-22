@@ -5,11 +5,28 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@bracketed/decompress@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@bracketed/decompress@npm:1.0.2"
+  dependencies:
+    "@types/node": "npm:^20.10.5"
+    decompress-tar: "npm:^4.1.1"
+    decompress-tarbz2: "npm:^4.1.1"
+    decompress-targz: "npm:^4.1.1"
+    decompress-unzip: "npm:^4.0.1"
+    graceful-fs: "npm:^4.2.11"
+    make-dir: "npm:^4.0.0"
+    pify: "npm:^6.1.0"
+    strip-dirs: "npm:^3.0.0"
+  checksum: fb6d268301b867fc32211d7b6fdd84d46b0437f0374bad56c34e45f0d121b3ab51299c4231e190fd9b62237c7d2f45c63c6128cb0bdab7fc16cb5a15ad2561e2
+  languageName: node
+  linkType: hard
+
 "@bracketed/download@workspace:.":
   version: 0.0.0-use.local
   resolution: "@bracketed/download@workspace:."
   dependencies:
-    "@types/decompress": "npm:^4.2.7"
+    "@bracketed/decompress": "npm:^1.0.2"
     "@types/node": "npm:^20.10.5"
     archive-type: "npm:^4.0.0"
     content-disposition: "npm:^0.5.4"
@@ -48,15 +65,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/decompress@npm:^4.2.7":
-  version: 4.2.7
-  resolution: "@types/decompress@npm:4.2.7"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 29f7d150c43a15a34f026fc04cd7e38c7717aeaecd8b3121a842560ac6f57f1df330b6401c326c9068e42c993c3bc23c1bb540aa3b89cc5f5323748634380967
-  languageName: node
-  linkType: hard
-
 "@types/http-cache-semantics@npm:^4.0.2":
   version: 4.0.4
   resolution: "@types/http-cache-semantics@npm:4.0.4"
@@ -64,7 +72,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.10.5":
+"@types/node@npm:^20.10.5":
   version: 20.10.5
   resolution: "@types/node@npm:20.10.5"
   dependencies:
@@ -205,7 +213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decompress-tarbz2@npm:^4.0.0":
+"decompress-tarbz2@npm:^4.0.0, decompress-tarbz2@npm:^4.1.1":
   version: 4.1.1
   resolution: "decompress-tarbz2@npm:4.1.1"
   dependencies:
@@ -218,7 +226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decompress-targz@npm:^4.0.0":
+"decompress-targz@npm:^4.0.0, decompress-targz@npm:^4.1.1":
   version: 4.1.1
   resolution: "decompress-targz@npm:4.1.1"
   dependencies:
@@ -413,7 +421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.10":
+"graceful-fs@npm:^4.1.10, graceful-fs@npm:^4.2.11":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
@@ -451,6 +459,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"inspect-with-kind@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "inspect-with-kind@npm:1.0.5"
+  dependencies:
+    kind-of: "npm:^6.0.2"
+  checksum: 4a7ca641927d24b5f0fabbad48ed940cffa840d6cfa07b6bc475593f6e0679b4d30ec1714de289cb17b10214a36e6bdccc257262a1163e33741425e5d311e8d1
+  languageName: node
+  linkType: hard
+
 "is-natural-number@npm:^4.0.1":
   version: 4.0.1
   resolution: "is-natural-number@npm:4.0.1"
@@ -458,7 +475,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-plain-obj@npm:^1.0.0":
+"is-plain-obj@npm:^1.0.0, is-plain-obj@npm:^1.1.0":
   version: 1.1.0
   resolution: "is-plain-obj@npm:1.1.0"
   checksum: daaee1805add26f781b413fdf192fc91d52409583be30ace35c82607d440da63cc4cac0ac55136716688d6c0a2c6ef3edb2254fecbd1fe06056d6bd15975ee8c
@@ -492,6 +509,13 @@ __metadata:
   dependencies:
     json-buffer: "npm:3.0.1"
   checksum: aa52f3c5e18e16bb6324876bb8b59dd02acf782a4b789c7b2ae21107fab95fab3890ed448d4f8dba80ce05391eeac4bfabb4f02a20221342982f806fa2cf271e
+  languageName: node
+  linkType: hard
+
+"kind-of@npm:^6.0.2":
+  version: 6.0.3
+  resolution: "kind-of@npm:6.0.3"
+  checksum: 61cdff9623dabf3568b6445e93e31376bee1cdb93f8ba7033d86022c2a9b1791a1d9510e026e6465ebd701a6dd2f7b0808483ad8838341ac52f003f512e0b4c4
   languageName: node
   linkType: hard
 
@@ -791,6 +815,16 @@ __metadata:
   dependencies:
     is-natural-number: "npm:^4.0.1"
   checksum: 073d6d08331ec2e87afc2c2535d7336fee1d63797384045e4ecb9908a5ac6615022ee000cc278d6bbc94147bed7350f7cf4657b6d18c377813f37e7ae329fb52
+  languageName: node
+  linkType: hard
+
+"strip-dirs@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "strip-dirs@npm:3.0.0"
+  dependencies:
+    inspect-with-kind: "npm:^1.0.5"
+    is-plain-obj: "npm:^1.1.0"
+  checksum: 136cc8f3543f8785c5c59dc270d98106fb6625142e34304ea66a118338e5d5051681d650484a6737bee9bcfafd259fa5c044f4dda0f3bb5a5ffebf4e77effa11
   languageName: node
   linkType: hard
 

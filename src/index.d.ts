@@ -1,23 +1,23 @@
 /// <reference types="node" />
-import { DecompressOptions } from "decompress";
-import { GotEmitter, GotOptions } from "got";
-import { Duplex } from "stream";
+import { DecompressOptions } from '@bracketed/decompress';
+import { GotEmitter, GotOptions } from 'got';
+import { Duplex } from 'stream';
 
 declare namespace download {
-    interface DownloadOptions extends DecompressOptions, GotOptions<string | null> {
-        /**
-         * If set to `true`, try extracting the file using
-         * [`decompress`](https://github.com/kevva/decompress).
-         *
-         * @default false
-         */
-        extract?: boolean | undefined;
+	interface DownloadOptions extends DecompressOptions, GotOptions<string | null> {
+		/**
+		 * If set to `true`, try extracting the file using
+		 * [`decompress`](https://github.com/kevva/decompress).
+		 *
+		 * @default false
+		 */
+		extract?: boolean | undefined;
 
-        /**
-         * Name of the saved file.
-         */
-        filename?: string | undefined;
-    }
+		/**
+		 * Name of the saved file.
+		 */
+		filename?: string | undefined;
+	}
 }
 
 /**
@@ -46,11 +46,11 @@ declare namespace download {
  *     ].map(url => download(url, 'dist')));
  * })();
  */
-declare function download(
-    url: string,
-    destination?: string,
-    options?: download.DownloadOptions,
+declare async function download(
+	url: string,
+	destination?: string,
+	options?: download.DownloadOptions
 ): Promise<Buffer> & GotEmitter & Duplex;
-declare function download(url: string, options?: download.DownloadOptions): Promise<Buffer> & GotEmitter & Duplex;
+declare async function download(url: string, options?: download.DownloadOptions): Promise<Buffer> & GotEmitter & Duplex;
 
 export = download;
