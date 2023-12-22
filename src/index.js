@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const {URL} = require('url');
+const { URL } = require('url');
 const contentDisposition = require('content-disposition');
 const archiveType = require('archive-type');
 const decompress = require('decompress');
@@ -15,9 +15,9 @@ const fileType = require('file-type');
 const extName = require('ext-name');
 
 const fsP = pify(fs);
-const filenameFromPath = res => path.basename(new URL(res.requestUrl).pathname);
+const filenameFromPath = (res) => path.basename(new URL(res.requestUrl).pathname);
 
-const getExtFromMime = res => {
+const getExtFromMime = (res) => {
 	const header = res.headers['content-type'];
 
 	if (!header) {
@@ -63,37 +63,43 @@ module.exports = (uri, output, opts) => {
 		output = null;
 	}
 
-	opts = Object.assign({
-		encoding: null,
-		rejectUnauthorized: process.env.npm_config_strict_ssl !== 'false'
-	}, opts);
+	opts = Object.assign(
+		{
+			encoding: null,
+			rejectUnauthorized: process.env.npm_config_strict_ssl !== 'false',
+		},
+		opts
+	);
 
 	const stream = got.stream(uri, opts);
 
-	const promise = pEvent(stream, 'response').then(res => {
-		const encoding = opts.encoding === null ? 'buffer' : opts.encoding;
-		return Promise.all([getStream(stream, {encoding}), res]);
-	}).then(result => {
-		const [data, res] = result;
+	const promise = pEvent(stream, 'response')
+		.then((res) => {
+			const encoding = opts.encoding === null ? 'buffer' : opts.encoding;
+			return Promise.all([getStream(stream, { encoding }), res]);
+		})
+		.then((result) => {
+			const [data, res] = result;
 
-		if (!output) {
-			return opts.extract && archiveType(data) ? decompress(data, opts) : data;
-		}
+			if (!output) {
+				return opts.extract && archiveType(data) ? decompress(data, opts) : data;
+			}
 
-		const filename = opts.filename || filenamify(getFilename(res, data));
-		const outputFilepath = path.join(output, filename);
+			const filename = opts.filename || filenamify(getFilename(res, data));
+			const outputFilepath = path.join(output, filename);
 
-		if (opts.extract && archiveType(data)) {
-			return decompress(data, path.dirname(outputFilepath), opts);
-		}
+			if (opts.extract && archiveType(data)) {
+				return decompress(data, path.dirname(outputFilepath), opts);
+			}
 
-		return makeDir(path.dirname(outputFilepath))
-			.then(() => fsP.writeFile(outputFilepath, data))
-			.then(() => data);
-	});
+			return makeDir(path.dirname(outputFilepath))
+				.then(() => fsP.writeFile(outputFilepath, data))
+				.then(() => data);
+		});
 
 	stream.then = promise.then.bind(promise);
 	stream.catch = promise.catch.bind(promise);
 
 	return stream;
 };
+

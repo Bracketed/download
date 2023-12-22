@@ -1,23 +1,21 @@
 {
-	"name": "download",
-	"version": "8.0.0",
-	"description": "Download and extract files",
+	"name": "@bracketed/download",
+	"version": "1.0.0",
+	"description": "Download and extract files using node.js!",
 	"license": "MIT",
-	"repository": "kevva/download",
-	"author": {
-		"email": "kevinmartensson@gmail.com",
-		"name": "Kevin Mårtensson",
-		"url": "github.com/kevva"
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bracketed/download.git",
+		"directory": "."
 	},
-	"engines": {
-		"node": ">=10"
+	"publishConfig": {
+		"access": "public"
 	},
-	"scripts": {
-		"test": "xo && ava"
-	},
-	"files": [
-		"index.js"
-	],
+	"homepage": "https://bracketed.co.uk",
+	"sideEffects": false,
+	"author": "bracketed",
+	"main": "src/index.js",
+	"types": "src/index.d.ts",
 	"keywords": [
 		"download",
 		"extract",
@@ -26,25 +24,20 @@
 		"url"
 	],
 	"dependencies": {
+		"@types/node": "^20.10.5",
 		"archive-type": "^4.0.0",
-		"content-disposition": "^0.5.2",
+		"content-disposition": "^0.5.4",
 		"decompress": "^4.2.1",
 		"ext-name": "^5.0.0",
-		"file-type": "^11.1.0",
-		"filenamify": "^3.0.0",
-		"get-stream": "^4.1.0",
-		"got": "^8.3.1",
-		"make-dir": "^2.1.0",
-		"p-event": "^2.1.0",
-		"pify": "^4.0.1"
+		"file-type": "^18.7.0",
+		"filenamify": "^6.0.0",
+		"get-stream": "^8.0.1",
+		"got": "^14.0.0",
+		"make-dir": "^4.0.0",
+		"p-event": "^6.0.0",
+		"pify": "^6.1.0"
 	},
-	"devDependencies": {
-		"ava": "^1.4.1",
-		"is-zip": "^1.0.0",
-		"nock": "^10.0.6",
-		"path-exists": "^3.0.0",
-		"random-buffer": "^0.1.0",
-		"rimraf": "^3.0.0",
-		"xo": "^0.24.0"
+	"bugs": {
+		"url": "https://github.com/bracketed/download/issues"
 	}
 }
